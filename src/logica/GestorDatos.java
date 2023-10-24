@@ -1,94 +1,114 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GestorDatos {
-    private static final String DATOS_JSON_FILE = "datos.json";
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private List<Expediente> expedientes = new ArrayList<>();
-    private List<Mascota> mascotas = new ArrayList<>();
-    private List<Cita> citas = new ArrayList<>();
+    private Map<String, Expediente> expedientes;
+    private List<Cita> citas;
 
     public GestorDatos() {
-        cargarDatosDesdeArchivo();
-    }
-
-    public void agregarExpediente(Expediente expediente) {
-        expedientes.add(expediente);
-        guardarDatosEnArchivo();
-    }
-
-    public void agregarMascota(Mascota mascota) {
-        mascotas.add(mascota);
-        guardarDatosEnArchivo();
+        expedientes = new HashMap<>();
+        citas = new ArrayList<>();
     }
 
     public void agregarCita(Cita cita) {
         citas.add(cita);
-        guardarDatosEnArchivo();
     }
 
-    public List<Expediente> consultarExpedientes() {
-        return new ArrayList<>(expedientes);
+    public void removerCita(Cita cita) {
+        citas.remove(cita);
     }
 
-    public List<Mascota> consultarMascotas() {
-        return new ArrayList<>(mascotas);
+    public List<Cita> getCitas() {
+        return citas;
     }
 
-    public List<Cita> consultarCitas() {
-        return new ArrayList<>(citas);
+    public void agregarExpediente(Expediente expediente) {
+        expedientes.put(expediente.getNumero(), expediente);
     }
 
-    private void cargarDatosDesdeArchivo() {
-        try {
-            File archivo = new File(DATOS_JSON_FILE);
-            if (archivo.exists()) {
-                List<DatosGuardados> datosGuardados = objectMapper.readValue(
-                        archivo,
-                        new TypeReference<List<DatosGuardados>>() {
-                        }
-                );
-                for (DatosGuardados datos : datosGuardados) {
-                    if (datos.getTipo().equals("Expediente")) {
-                        expedientes.add((Expediente) datos.getDato());
-                    } else if (datos.getTipo().equals("Mascota")) {
-                        mascotas.add((Mascota) datos.getDato());
-                    } else if (datos.getTipo().equals("Cita")) {
-                        citas.add((Cita) datos.getDato());
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void removerExpediente(Expediente expediente) {
+        expedientes.remove(expediente.getNumero());
+    }
+
+    public Expediente getExpediente(String numero) {
+        return expedientes.get(numero);
+    }
+
+    private class Expediente {
+        private String numero;
+        private String nombre;
+        private String especie;
+        private String raza;
+        private String sexo;
+        private String color;
+        private String fechaNacimiento;
+        private String propietario;
+        private String telefonoPropietario;
+        private String direccionPropietario;
+        private String observaciones;
+
+        public Expediente(String numero, String nombre, String especie, String raza, String sexo, String color,
+                String fechaNacimiento, String propietario, String telefonoPropietario, String direccionPropietario,
+                String observaciones) {
+            this.numero = numero;
+            this.nombre = nombre;
+            this.especie = especie;
+            this.raza = raza;
+            this.sexo = sexo;
+            this.color = color;
+            this.fechaNacimiento = fechaNacimiento;
+            this.propietario = propietario;
+            this.telefonoPropietario = telefonoPropietario;
+            this.direccionPropietario = direccionPropietario;
+            this.observaciones = observaciones;
         }
-    }
 
-    private void guardarDatosEnArchivo() {
-        List<DatosGuardados> datosGuardados = new ArrayList<>();
-        for (Expediente expediente : expedientes) {
-            datosGuardados.add(new DatosGuardados("Expediente", expediente));
+        public String getNumero() {
+            return numero;
         }
-        for (Mascota mascota : mascotas) {
-            datosGuardados.add(new DatosGuardados("Mascota", mascota));
+
+        public String getNombre() {
+            return nombre;
         }
-        for (Cita cita : citas) {
-            datosGuardados.add(new DatosGuardados("Cita", cita));
+
+        public String getEspecie() {
+            return especie;
         }
-        try {
-            objectMapper.writeValue(new File(DATOS_JSON_FILE), datosGuardados);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        public String getRaza() {
+            return raza;
+        }
+
+        public String getSexo() {
+            return sexo;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public String getFechaNacimiento() {
+            return fechaNacimiento;
+        }
+
+        public String getPropietario() {
+            return propietario;
+        }
+
+        public String getTelefonoPropietario() {
+            return telefonoPropietario;
+        }
+
+        public String getDireccionPropietario() {
+            return direccionPropietario;
+        }
+
+        public String getObservaciones() {
+            return observaciones;
         }
     }
 }
