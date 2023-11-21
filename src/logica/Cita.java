@@ -12,10 +12,10 @@ public class Cita {
     private Date fecha;
     private String hora;
     private String veterinario;
-    private Mascota mascota;
+    private Paciente mascota;
     private String motivo;
 
-    public Cita(Date fecha, String hora, String veterinario, Mascota mascota, String motivo) {
+    public Cita(Date fecha, String hora, String veterinario, Paciente mascota, String motivo) {
         this.id = UUID.randomUUID(); // Generar un ID único
         this.fecha = fecha;
         this.hora = hora;
@@ -42,7 +42,7 @@ public class Cita {
         return veterinario;
     }
 
-    public Mascota getMascota() {
+    public Paciente getMascota() {
         return mascota;
     }
 

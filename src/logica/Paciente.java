@@ -2,7 +2,7 @@ package logica;
 
 import java.util.UUID;
 
-public class Mascota {
+public class Paciente {
     private UUID id;
     private String nombre;
     private int edad;
@@ -10,8 +10,10 @@ public class Mascota {
     private double altura;
     private String tipoMascota;
     private String nombreDueno;
+    private String raza;
 
-    public Mascota(String nombre, int edad, double peso, double altura, String tipoMascota, String nombreDueno) {
+    public Paciente(String nombre, int edad, double peso, double altura,
+     String tipoMascota, String nombreDueno, String raza) {
         this.id = UUID.randomUUID(); // Generar un ID único
         this.nombre = nombre;
         this.edad = edad;
@@ -19,6 +21,7 @@ public class Mascota {
         this.altura = altura;
         this.tipoMascota = tipoMascota;
         this.nombreDueno = nombreDueno;
+        this.raza = raza;
     }
 
     // Getters y setters para todos los atributos
@@ -75,10 +78,27 @@ public class Mascota {
         this.nombreDueno = nombreDueno;
     }
 
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
     @Override
-public String toString() {
-    return "Mascota [ID=" + id + ", Nombre=" + nombre + ", Edad=" + edad + " años, Peso=" + peso + " kg, Altura=" + altura + " m, Tipo=" + tipoMascota + ", Dueño=" + nombreDueno + "]";
-}
+    public String toString() {
+        return "Mascota{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", edad=" + edad +
+                ", peso=" + peso +
+                ", altura=" + altura +
+                ", tipoMascota='" + tipoMascota + '\'' +
+                ", nombreDueno='" + nombreDueno + '\'' +
+                ", raza='" + raza + '\'' +
+                '}';
+    }
 
 }
 
